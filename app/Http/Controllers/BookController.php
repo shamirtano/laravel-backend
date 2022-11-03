@@ -14,8 +14,16 @@ class BookController extends Controller
      */
     public function index()
     {
-        // Eloquent
-        return Book::paginate();
+        // Usamos Eloquent validar si viene vacio o no
+        $books = Book::all();
+
+        if ($books->isEmpty()) {
+            return response()->json([
+                'message' => 'No hay libros registrados'
+            ], 404);
+        }
+
+        return response()->json($books, 200);        
     }
 
     /**
